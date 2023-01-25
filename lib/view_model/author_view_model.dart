@@ -19,11 +19,18 @@ class AuthorViewModel extends ChangeNotifier {
 
   Future<void> addNewAuthor(Author author) async {
     await _repository.create(author);
+    _authors = await _repository.get();
     notifyListeners();
   }
 
   Future<void> getAuthor(int id) async {
     _author = await _repository.getById(id);
+    notifyListeners();
+  }
+
+  Future<void> removeAuthor(Author author) async {
+    await _repository.delete(author);
+    _authors = await _repository.get();
     notifyListeners();
   }
 }

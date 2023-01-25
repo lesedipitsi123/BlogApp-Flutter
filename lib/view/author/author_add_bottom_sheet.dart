@@ -15,15 +15,15 @@ class AuthorBottomSheet extends StatefulWidget {
   State<StatefulWidget> createState() => _AuthorBottomSheetState();
 }
 
-
 class _AuthorBottomSheetState extends State<AuthorBottomSheet> {
   late final AuthorViewModel _authorViewModel;
-  final authorNameController = TextEditingController();
+  final TextEditingController authorNameController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
     _authorViewModel = context.read<AuthorViewModel>();
+    authorNameController.text = widget.authorName ?? "";
   }
 
   @override
@@ -31,7 +31,6 @@ class _AuthorBottomSheetState extends State<AuthorBottomSheet> {
     authorNameController.dispose();
     super.dispose();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +49,6 @@ class _AuthorBottomSheetState extends State<AuthorBottomSheet> {
               columnDivider16,
               TextFormField(
                 controller: authorNameController,
-                initialValue: widget.authorName,
                 maxLines: 1,
                 keyboardType: TextInputType.name,
                 decoration: const InputDecoration(
@@ -71,8 +69,11 @@ class _AuthorBottomSheetState extends State<AuthorBottomSheet> {
                   ),
                   TextButton(
                     onPressed: () {
-                      _authorViewModel.addNewAuthor(Author(id: 0, name: authorNameController.text));
-                      ScaffoldMessenger.of(context).showSnackBar(showSnackBar(authorSnackbarSaveSuccess));
+                      _authorViewModel.addNewAuthor(
+                          Author(name: authorNameController.text));
+                      ScaffoldMessenger.of(context).showSnackBar(
+                          showSnackBar(authorSnackbarSaveSuccess));
+                      Navigator.pop(context);
                     },
                     child: const Text(btnSave),
                   )

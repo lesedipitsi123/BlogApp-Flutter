@@ -35,13 +35,13 @@ class BlogServiceImpl implements BlogService {
   Future<void> update(Blog blog) async {
     final db = await _blogAppDb.configureDatabase();
     db.update(Constants.blogTable, blog.toMap(),
-        where: "id = ?s", whereArgs: [blog.id]);
+        where: "id = ?", whereArgs: [blog.id]);
   }
 
   @override
   Future<void> delete(Blog blog) async {
     final db = await _blogAppDb.configureDatabase();
-    db.delete(Constants.blogTable, where: "id = ?s", whereArgs: [blog.id]);
+    db.delete(Constants.blogTable, where: "id = ?", whereArgs: [blog.id]);
   }
 
   @override
@@ -55,7 +55,7 @@ class BlogServiceImpl implements BlogService {
   @override
   Future<List<Blog>> getByAuthorId(int authorId) async {
     final db = await _blogAppDb.configureDatabase();
-    final query = await db.query(Constants.blogTable, limit: 1, where: "authorId = ?s", whereArgs: [authorId]);
+    final query = await db.query(Constants.blogTable, limit: 1, where: "authorId = ?", whereArgs: [authorId]);
 
     return Blog.fromMap(query);
   }
@@ -63,7 +63,7 @@ class BlogServiceImpl implements BlogService {
   @override
   Future<Blog> getById(int id) async {
     final db = await _blogAppDb.configureDatabase();
-    final query = await db.query(Constants.blogTable, limit: 1, where: "id = ?s", whereArgs: [id]);
+    final query = await db.query(Constants.blogTable, limit: 1, where: "id = ?", whereArgs: [id]);
 
     return Blog.fromSingleMap(query);
   }

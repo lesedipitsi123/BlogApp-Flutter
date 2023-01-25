@@ -21,7 +21,7 @@ class BlogAppDb {
   static const int _databaseVersion = 1;
   static const String _databaseName = "blog_app_database";
   static const String _createAuthorTable =
-      "CREATE TABLE ${Constants.authorTable}(id INTEGER PRIMARY KEY, name TEXT)";
+      "CREATE TABLE ${Constants.authorTable}(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT)";
   static const String _createBlogTable =
-      "CREATE TABLE ${Constants.blogTable}(id INTEGER PRIMARY KEY, author INTEGER, title TEXT, description TEXT)";
+      "CREATE TABLE ${Constants.blogTable}(id INTEGER PRIMARY KEY AUTOINCREMENT, author INTEGER, title TEXT, description TEXT)";
 }

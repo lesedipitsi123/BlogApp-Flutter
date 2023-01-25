@@ -1,11 +1,11 @@
 class Blog {
-  final int id;
+  final int? id;
   final int authorId;
   final String title;
   final String description;
 
   Blog(
-      {required this.id,
+      {this.id,
       required this.authorId,
       required this.title,
       required this.description});

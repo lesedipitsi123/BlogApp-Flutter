@@ -33,13 +33,13 @@ class AuthorServiceImpl implements AuthorService {
   Future<void> update(Author author) async {
     final db = await _blogAppDb.configureDatabase();
     db.update(Constants.authorTable, author.toMap(),
-        where: "id = ?s", whereArgs: [author.id]);
+        where: "id = ?", whereArgs: [author.id]);
   }
 
   @override
   Future<void> delete(Author author) async {
     final db = await _blogAppDb.configureDatabase();
-    db.delete(Constants.authorTable, where: "id = ?s", whereArgs: [author.id]);
+    db.delete(Constants.authorTable, where: "id = ?", whereArgs: [author.id]);
   }
 
   @override
@@ -54,7 +54,7 @@ class AuthorServiceImpl implements AuthorService {
   Future<Author> getById(int id) async {
     final db = await _blogAppDb.configureDatabase();
     final query = await db.query(Constants.authorTable,
-        limit: 1, where: "id = ?s", whereArgs: [id]);
+        limit: 1, where: "id = ?", whereArgs: [id]);
 
     return Author.fromSingleMap(query);
   }

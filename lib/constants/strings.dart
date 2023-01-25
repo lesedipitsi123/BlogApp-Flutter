@@ -1,5 +1,7 @@
 const authorAppbarTitle = "Authors";
 const authorBtnAddNew = "Add Author";
+const authorBtnEdit = "Edit";
+const authorBtnDelete = "Delete";
 const authorBtnFloatingAddNew = "Author";
 const authorEmptyList = "Hmm seems a little empty here";
 const authorNameTextInput = "Enter name";

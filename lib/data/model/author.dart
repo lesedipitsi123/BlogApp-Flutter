@@ -1,9 +1,9 @@
 class Author {
-  final int id;
+  final int? id;
   final String name;
 
   Author({
-    required this.id,
+    this.id,
     required this.name
   });
 
