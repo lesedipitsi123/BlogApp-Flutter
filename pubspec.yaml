@@ -1,0 +1,29 @@
+name: blog_app
+description: A new Flutter project.
+
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=2.18.5 <3.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  sqflite: ^2.2.3
+  path:
+  cupertino_icons: ^1.0.2
+  provider: ^6.0.5
+  get_it: ^7.2.0
+  injectable: ^2.1.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+  injectable_generator:
+  build_runner:
+
+flutter:
+  uses-material-design: true
