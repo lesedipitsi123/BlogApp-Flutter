@@ -30,9 +30,7 @@ class AuthorListContent extends StatelessWidget {
       AuthorViewModel authorViewModel) {
     return Padding(
       padding: const EdgeInsets.only(left: 10.0, right: 10.0),
-      child: GridView.builder(
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2, crossAxisSpacing: 20, mainAxisSpacing: 20),
+      child: ListView.builder(
           itemCount: authors.length,
           itemBuilder: (context, index) {
             return Card(
@@ -42,6 +40,7 @@ class AuthorListContent extends StatelessWidget {
                 onTap: () {
 
                 },
+                borderRadius: const BorderRadius.all(Radius.circular(12)),
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Column(
@@ -54,13 +53,14 @@ class AuthorListContent extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text("1 blogs",
+                          Text("0 blogs",
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Theme.of(context)
                                       .colorScheme
                                       .onSurfaceVariant)),
                           PopupMenuButton<ClickItem>(
+                            elevation: 2.0,
                             icon: const Icon(Icons.more_vert),
                             color: Theme.of(context).colorScheme.outline,
                             onSelected: (ClickItem item) async {
