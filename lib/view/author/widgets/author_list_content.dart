@@ -1,9 +1,11 @@
 import 'package:blog_app/constants/dimens.dart';
+import 'package:blog_app/constants/routes.dart';
 import 'package:blog_app/constants/strings.dart';
 import 'package:blog_app/data/model/author_with_blogs.dart';
 import 'package:blog_app/view/author/author_add_bottom_sheet.dart';
 import 'package:blog_app/view_model/author_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 enum ClickItem { edit, delete }
@@ -26,8 +28,8 @@ class AuthorListContent extends StatelessWidget {
     );
   }
 
-  Widget _authorsContent(BuildContext context, List<AuthorWithBlogs> authorsWithBlogs,
-      AuthorViewModel authorViewModel) {
+  Widget _authorsContent(BuildContext context,
+      List<AuthorWithBlogs> authorsWithBlogs, AuthorViewModel authorViewModel) {
     return Padding(
       padding: const EdgeInsets.only(left: 10.0, right: 10.0),
       child: ListView.builder(
@@ -38,7 +40,10 @@ class AuthorListContent extends StatelessWidget {
               color: Theme.of(context).colorScheme.surfaceVariant,
               child: InkWell(
                 onTap: () {
-
+                  context.goNamed(blogScreenRouteName, params: {
+                    'authorId': authorsWithBlogs[index].author.id.toString(),
+                    'authorName': authorsWithBlogs[index].author.name
+                  });
                 },
                 borderRadius: const BorderRadius.all(Radius.circular(12)),
                 child: Padding(
@@ -76,11 +81,40 @@ class AuthorListContent extends StatelessWidget {
                                       context: context,
                                       builder: (context) {
                                         return AuthorBottomSheet(
-                                            authorName: authorsWithBlogs[index].author.name);
+                                            authorName: authorsWithBlogs[index]
+                                                .author
+                                                .name);
                                       });
                                   break;
                                 case ClickItem.delete:
-                                  authorViewModel.removeAuthor(authorsWithBlogs[index].author);
+                                  showDialog<String>(
+                                      context: context,
+                                      builder: (BuildContext context) =>
+                                          AlertDialog(
+                                            title:
+                                                const Text('Delete author'),
+                                            content: const Text(
+                                                'Are you sure?'),
+                                            actions: <Widget>[
+                                              TextButton(
+                                                onPressed: () => Navigator.pop(
+                                                    context, 'Cancel'),
+                                                child: const Text('Cancel'),
+                                              ),
+                                              TextButton(
+                                                onPressed: () {
+                                                  authorViewModel.removeAuthor(
+                                                      authorsWithBlogs[index]
+                                                          .author);
+
+                                                  Navigator.pop(
+                                                      context, 'Ok');
+                                                },
+                                                child: const Text('OK'),
+                                              ),
+                                            ],
+                                          ));
+
                                   break;
                               }
                             },

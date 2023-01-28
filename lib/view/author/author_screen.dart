@@ -1,6 +1,6 @@
 import 'package:blog_app/constants/strings.dart';
 import 'package:blog_app/view/author/author_add_bottom_sheet.dart';
-import 'package:blog_app/view/widgets/author_list_content.dart';
+import 'package:blog_app/view/author/widgets/author_list_content.dart';
 import 'package:flutter/material.dart';
 
 class AuthorScreen extends StatefulWidget {
