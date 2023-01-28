@@ -79,7 +79,7 @@ class _AuthorBottomSheetState extends State<AuthorBottomSheet> {
                   )
                 ],
               ),
-              columnDivider16,
+              columnDivider32,
             ]),
           )
         ]);
