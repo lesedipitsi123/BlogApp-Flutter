@@ -1,3 +1,4 @@
+import 'package:blog_app/constants/strings.dart';
 import 'package:flutter/material.dart';
 
 class BlogScreen extends StatefulWidget {
@@ -11,8 +12,11 @@ class _BlogScreenState extends State<BlogScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
+    return Scaffold(
+      appBar: AppBar(
+        elevation: 2,
+        title: const Text(blogAppbarTitle),
+      ),
+    );
   }
-
 }
