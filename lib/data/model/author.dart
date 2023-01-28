@@ -18,7 +18,7 @@ class Author {
     List<Author> authors = [];
 
     for (var item in map) {
-      authors.add(Author(id: item["id"], name: item["name"]));
+      authors.add(toAuthor(item));
     }
 
     return authors;
@@ -27,5 +27,9 @@ class Author {
   static Author fromSingleMap(List<Map<String, dynamic>> map) {
     final author = Author(id: map.first["id"], name: map.first["name"]);
     return author;
+  }
+
+  static Author toAuthor(Map<String, dynamic> map) {
+    return Author(id: map["id"], name: map["name"]);
   }
 }

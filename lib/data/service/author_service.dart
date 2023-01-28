@@ -1,6 +1,8 @@
 import 'package:blog_app/constants/constants.dart';
 import 'package:blog_app/data/blog_app_db.dart';
 import 'package:blog_app/data/model/author.dart';
+import 'package:blog_app/data/model/author_with_blogs.dart';
+import 'package:blog_app/data/model/blog.dart';
 import 'package:injectable/injectable.dart';
 
 abstract class AuthorService {
@@ -13,6 +15,10 @@ abstract class AuthorService {
   Future<List<Author>> get();
 
   Future<Author> getById(int id);
+
+  Future<AuthorWithBlogs> getAuthorWithBlogs(int id);
+
+  Future<List<AuthorWithBlogs>> getAuthorsWithBlogs();
 
   Future<bool> hasRecords();
 }
@@ -57,6 +63,45 @@ class AuthorServiceImpl implements AuthorService {
         limit: 1, where: "id = ?", whereArgs: [id]);
 
     return Author.fromSingleMap(query);
+  }
+
+  @override
+  Future<AuthorWithBlogs> getAuthorWithBlogs(int id) async {
+    final db = await _blogAppDb.configureDatabase();
+    final queryAuthor = await db.query(Constants.authorTable,
+        limit: 1, where: "id = ?", whereArgs: [id]);
+    final queryBlogs = await db
+        .query(Constants.blogTable, where: "authorId = ?", whereArgs: [id]);
+
+    final author = Author.fromSingleMap(queryAuthor);
+    final blogs = Blog.fromMap(queryBlogs);
+
+    return AuthorWithBlogs(author: author, blogs: blogs);
+  }
+
+  @override
+  Future<List<AuthorWithBlogs>> getAuthorsWithBlogs() async {
+    final db = await _blogAppDb.configureDatabase();
+
+    final query = await db.query(Constants.authorTable);
+
+    List<AuthorWithBlogs> authorsWithBlogs = [];
+
+    for (var item in query) {
+
+      var author = Author.toAuthor(item);
+      var blogs = List<Blog>.empty();
+
+      if (author.id != null ) {
+        final queryBlogs = await db
+            .query(Constants.blogTable, where: "authorId = ?", whereArgs: [author.id]);
+        blogs = Blog.fromMap(queryBlogs);
+      }
+
+      authorsWithBlogs.add(AuthorWithBlogs(author: author, blogs: blogs));
+    }
+
+    return authorsWithBlogs;
   }
 
   @override

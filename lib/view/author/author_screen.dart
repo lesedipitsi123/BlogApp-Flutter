@@ -22,6 +22,7 @@ class _AuthorScreenState extends State<AuthorScreen> {
         child: AuthorListContent()
       ),
       floatingActionButton: FloatingActionButton.extended(
+        elevation: 1,
         icon: const Icon(Icons.add),
         label: const Text(authorBtnFloatingAddNew),
         onPressed: () => {

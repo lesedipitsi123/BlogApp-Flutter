@@ -1,6 +1,6 @@
 import 'package:blog_app/constants/dimens.dart';
 import 'package:blog_app/constants/strings.dart';
-import 'package:blog_app/data/model/author.dart';
+import 'package:blog_app/data/model/author_with_blogs.dart';
 import 'package:blog_app/view/author/author_add_bottom_sheet.dart';
 import 'package:blog_app/view_model/author_view_model.dart';
 import 'package:flutter/material.dart';
@@ -14,24 +14,24 @@ class AuthorListContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final authorViewModel = context.read<AuthorViewModel>();
-    authorViewModel.getAuthors();
+    authorViewModel.getAuthorsWithBlogs();
 
-    return Selector<AuthorViewModel, List<Author>>(
-      selector: (context, viewModel) => viewModel.authors,
-      builder: (context, authors, child) {
-        return authors.isNotEmpty
-            ? _authorsContent(context, authors, authorViewModel)
+    return Selector<AuthorViewModel, List<AuthorWithBlogs>>(
+      selector: (context, viewModel) => viewModel.authorsWithBlogs,
+      builder: (context, authorsWithBlogs, child) {
+        return authorsWithBlogs.isNotEmpty
+            ? _authorsContent(context, authorsWithBlogs, authorViewModel)
             : _emptyAuthors(context);
       },
     );
   }
 
-  Widget _authorsContent(BuildContext context, List<Author> authors,
+  Widget _authorsContent(BuildContext context, List<AuthorWithBlogs> authorsWithBlogs,
       AuthorViewModel authorViewModel) {
     return Padding(
       padding: const EdgeInsets.only(left: 10.0, right: 10.0),
       child: ListView.builder(
-          itemCount: authors.length,
+          itemCount: authorsWithBlogs.length,
           itemBuilder: (context, index) {
             return Card(
               elevation: 0,
@@ -47,13 +47,13 @@ class AuthorListContent extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(authors[index].name,
+                      Text(authorsWithBlogs[index].author.name,
                           style: const TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 18.0)),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text("0 blogs",
+                          Text("${authorsWithBlogs[index].blogs.length} blogs",
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Theme.of(context)
@@ -76,11 +76,11 @@ class AuthorListContent extends StatelessWidget {
                                       context: context,
                                       builder: (context) {
                                         return AuthorBottomSheet(
-                                            authorName: authors[index].name);
+                                            authorName: authorsWithBlogs[index].author.name);
                                       });
                                   break;
                                 case ClickItem.delete:
-                                  authorViewModel.removeAuthor(authors[index]);
+                                  authorViewModel.removeAuthor(authorsWithBlogs[index].author);
                                   break;
                               }
                             },

@@ -1,4 +1,5 @@
 import 'package:blog_app/data/model/author.dart';
+import 'package:blog_app/data/model/author_with_blogs.dart';
 import 'package:blog_app/data/service/author_service.dart';
 import 'package:injectable/injectable.dart';
 
@@ -12,6 +13,10 @@ abstract class AuthorRepository {
   Future<List<Author>> get();
 
   Future<Author> getById(int id);
+
+  Future<AuthorWithBlogs> getAuthorWithBlogs(int id);
+
+  Future<List<AuthorWithBlogs>> getAuthorsWithBlogs();
 
   Future<bool> hasRecords();
 }
@@ -36,6 +41,12 @@ class AuthorRepositoryImpl implements AuthorRepository {
 
   @override
   Future<Author> getById(int id) => _service.getById(id);
+
+  @override
+  Future<AuthorWithBlogs> getAuthorWithBlogs(int id) => _service.getAuthorWithBlogs(id);
+
+  @override
+  Future<List<AuthorWithBlogs>> getAuthorsWithBlogs() => _service.getAuthorsWithBlogs();
 
   @override
   Future<bool> hasRecords() => _service.hasRecords();

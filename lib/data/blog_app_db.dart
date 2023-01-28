@@ -23,5 +23,5 @@ class BlogAppDb {
   static const String _createAuthorTable =
       "CREATE TABLE ${Constants.authorTable}(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT)";
   static const String _createBlogTable =
-      "CREATE TABLE ${Constants.blogTable}(id INTEGER PRIMARY KEY AUTOINCREMENT, author INTEGER, title TEXT, description TEXT)";
+      "CREATE TABLE ${Constants.blogTable}(id INTEGER PRIMARY KEY AUTOINCREMENT, authorId INTEGER, title TEXT, description TEXT)";
 }
